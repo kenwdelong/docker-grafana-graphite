@@ -1,3 +1,4 @@
 #! /bin/bash
 
-docker build -t kamon/grafana_graphite .
+docker build -t cooniur/grafana_graphite -f Dockerfile $PWD
+
