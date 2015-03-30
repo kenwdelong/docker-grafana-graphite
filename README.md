@@ -25,6 +25,13 @@ If you already have services running on your host that are using any of these po
 ports to whatever you want by changing left side number in the `-p` parameters. Find more details about mapping ports
 in the [Docker documentation](http://docs.docker.io/use/port_redirection/#port-redirection).
 
+#### External Volumes ####
+External volumes can be used to customize graphite configuration and store data out of the container.
+
+- Graphite configuration: `/opt/graphite/conf`
+- Graphite data: `/opt/graphite/storage`
+- Elasticsearch data: `var/lib/elasticsearch`
+
 
 ### Building the image yourself ###
 
