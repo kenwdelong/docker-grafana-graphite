@@ -1,0 +1,170 @@
+{
+  "id": null,
+  "title": "Kamon Dashboard",
+  "originalTitle": "Kamon Dashboard",
+  "tags": [
+    "kamon",
+    "metrics",
+    "actors"
+  ],
+  "style": "light",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "title": "Actor Metrics Label",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "title": "Example Data",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "id": 12,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "shared": false
+          },
+          "targets": [
+            {
+              "target": "stats.counters.example.statsd.counter.changed.*"
+            }
+          ],
+          "aliasColors": {},
+          "seriesOverrides": [],
+          "links": []
+        }
+      ],
+      "notice": false
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "type": "query",
+        "name": "Application",
+        "query": "stats.timers.*",
+        "includeAll": false,
+        "options": [
+          {
+            "text": "kamon",
+            "value": "kamon"
+          }
+        ],
+        "current": {
+          "text": "kamon",
+          "value": "kamon"
+        },
+        "datasource": null,
+        "allFormat": "glob"
+      },
+      {
+        "type": "query",
+        "name": "Host",
+        "query": "stats.timers.*.*",
+        "options": [
+          {
+            "text": "localhost",
+            "value": "localhost"
+          }
+        ],
+        "current": {
+          "text": "localhost",
+          "value": "localhost"
+        },
+        "datasource": null,
+        "allFormat": "glob"
+      }
+    ],
+    "enable": true
+  },
+  "annotations": {
+    "enable": false,
+    "list": []
+  },
+  "refresh": "5s",
+  "version": 6,
+  "hideAllLegends": false
+}

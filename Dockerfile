@@ -80,7 +80,8 @@ ADD     ./grafana/dashboards/* /src/dashboards/
 
 # Configure nginx and supervisord
 ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
-ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD     ./supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD     ./supervisord/supervisord-start.sh /usr/bin/supervisord-start.sh
 
 # ---------------- #
 #   Expose Ports   #
@@ -90,16 +91,18 @@ ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # StatsD UDP port: 8125
 # StatsD Management port: 8126
 EXPOSE  80
-EXPOSE  8215/udp
+EXPOSE  8125/udp
 EXPOSE  8126
 
 # Elasticsearch data storage path: /var/lib/elasticsearch
-# Graphite data storage path: /opt/graphite/storage
+# Graphite data storage path: /opt/graphite/storage/whipsper
+# Graphite log path: /opt/graphite/storage/log
 # Graphite conf path: /opt/graphite/conf
-VOLUME  ["/var/lib/elasticsearch", "/opt/graphite/storage", "/opt/graphite/conf"]
+# Supervisor log path: /var/log/supervisor
+VOLUME  ["/var/lib/elasticsearch", "/opt/graphite/storage/whisper", "/opt/graphite/storage/log", "/opt/graphite/conf", "/var/log/supervisor"]
 
 # -------- #
 #   Run!   #
 # -------- #
 
-CMD     ["/usr/bin/supervisord"]
+CMD     ["/bin/sh", "/usr/bin/supervisord-start.sh"]
