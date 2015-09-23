@@ -1,8 +1,7 @@
-StatsD + Graphite + Grafana + Kamon Dashboard
----------------------------------------------
+StatsD + Graphite + Grafana
+---------------------------
 
-This image contains a sensible default configuration of StatsD, Graphite and Grafana, and comes bundled with a example
-dashboard that gives you the basic metrics currently collected by Kamon for both Actors and Traces. There are two ways
+This image contains a sensible default configuration of StatsD, Graphite and Grafana. There are two ways
 for using this image:
 
 
@@ -18,7 +17,7 @@ need as a prerequisite is having Docker installed on your machine. The container
 To start a container with this image you just need to run the following command:
 
 ```bash
-docker run -d -p 80:80 -p 8125:8125/udp -p 8126:8126 --name kamon-grafana-dashboard cooniur/grafana_graphite:latest
+docker run -d -p 80:80 -p 8125:8125/udp -p 8126:8126 --name grafana kenwdelong/grafana_graphite:latest
 ```
 
 If you already have services running on your host that are using any of these ports, you may wish to map the container
