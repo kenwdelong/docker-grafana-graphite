@@ -2,11 +2,11 @@
 
 WORKDIR=$PWD/tmp
 
-docker kill kamon-grafana-dashboard
-docker rm kamon-grafana-dashboard
+docker kill grafana
+docker rm grafana
 
 docker run -d \
-	--name kamon-grafana-dashboard \
+	--name grafana \
 	-p 80:80 \
 	-p 8125:8125/udp \
 	-p 8126:8126 \
@@ -14,4 +14,4 @@ docker run -d \
 	-v $WORKDIR/graphite/storage/whisper:/opt/graphite/storage/whisper \
 	-v $WORKDIR/graphite/log/storage:/opt/graphite/storage/log \
 	-v $WORKDIR/graphite/log/supervisor:/var/log/supervisor \
-	cooniur/grafana_graphite
+	kenwdelong/grafana_graphite

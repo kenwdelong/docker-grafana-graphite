@@ -1,4 +1,0 @@
-#! /bin/bash
-
-docker build -t cooniur/grafana_graphite:1.9.1 --rm=true -f Dockerfile $PWD
-docker tag -f cooniur/grafana_graphite:1.9.1 cooniur/grafana_graphite:latest
