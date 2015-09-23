@@ -15,7 +15,8 @@ RUN     apt-get -y install software-properties-common \
         && apt-get autoremove
 
 RUN     pip install Twisted==11.1.0 \
-        && pip install Django==1.5
+        && pip install Django==1.5 \
+        && pip install pytz
 
 # Install Elasticsearch
 RUN     cd ~ && wget --quiet https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.0.deb \

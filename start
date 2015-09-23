@@ -14,4 +14,4 @@ docker run -d \
 	-v $WORKDIR/graphite/storage/whisper:/opt/graphite/storage/whisper \
 	-v $WORKDIR/graphite/log/storage:/opt/graphite/storage/log \
 	-v $WORKDIR/graphite/log/supervisor:/var/log/supervisor \
-	kenwdelong/grafana_graphite
+	kenwdelong/docker-grafana_graphite
