@@ -17,11 +17,8 @@ RUN     apt-get -y install software-properties-common \
 RUN     pip install Twisted==11.1.0 \
         && pip install Django==1.5 \
         && pip install pytz
-
-# Install Elasticsearch
-RUN     cd ~ && wget --quiet https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.0.deb \
-        && dpkg -i elasticsearch-1.5.0.deb \
-        && rm elasticsearch-1.5.0.deb
+        
+RUN     npm install ini chokidar        
 
 # Checkout the stable branches of Graphite, Carbon and Whisper and install from there
 # Install StatsD
@@ -42,19 +39,14 @@ RUN     mkdir -p /src \
         && cd /src/statsd \
         && git checkout v0.7.2 \
         && mkdir /src/grafana \
-        && wget http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz -O /src/grafana.tar.gz \
-        && tar -xzf /src/grafana.tar.gz -C /src/grafana --strip-components=1 \
+        && mkdir /opt/grafana \
+        && wget http://grafanarel.s3.amazonaws.com/grafana-2.1.3.linux-x64.tar.gz -O /src/grafana.tar.gz \
+        && tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 \
         && rm /src/grafana.tar.gz
 
 # ----------------- #
 #   Configuration   #
 # ----------------- #
-
-# Configure Elasticsearch
-ADD     ./elasticsearch/run /usr/local/bin/run_elasticsearch
-RUN     chown -R root:root /var/lib/elasticsearch \
-        && mkdir -p /tmp/elasticsearch \
-        && chown root:root /tmp/elasticsearch
 
 # Confiure StatsD
 ADD     ./statsd/config.js /src/statsd/config.js
@@ -71,18 +63,21 @@ RUN     mkdir -p /opt/graphite/storage/whisper \
         && chown -R root:root /opt/graphite/storage \
         && chmod 0775 /opt/graphite/storage /opt/graphite/storage/whisper \
         && chmod 0664 /opt/graphite/storage/graphite.db \
-        && python /opt/graphite/webapp/graphite/manage.py syncdb --noinput
+        && cd /opt/graphite/webapp/graphite \
+        && python manage.py syncdb --noinput
 
 # Configure Grafana
-ADD     ./grafana/config.js /src/grafana/config.js
+ADD     ./grafana/custom.ini /opt/grafana/conf/custom.ini
 
 # Add the default dashboards
+RUN     mkdir /src/dashboards \
+        && mkdir /src/dashboard-loader
 ADD     ./grafana/dashboards/* /src/dashboards/
+ADD     ./grafana/dashboard-loader/dashboard-loader.js /src/dashboard-loader/
 
 # Configure nginx and supervisord
 ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD     ./supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD     ./supervisord/supervisord-start.sh /usr/bin/supervisord-start.sh
 
 # ---------------- #
 #   Expose Ports   #
@@ -100,10 +95,10 @@ EXPOSE  8126
 # Graphite log path: /opt/graphite/storage/log
 # Graphite conf path: /opt/graphite/conf
 # Supervisor log path: /var/log/supervisor
-VOLUME  ["/var/lib/elasticsearch", "/opt/graphite/storage/whisper", "/opt/graphite/storage/log", "/opt/graphite/conf", "/var/log/supervisor"]
+# VOLUME  ["/var/lib/elasticsearch", "/opt/graphite/storage/whisper", "/opt/graphite/storage/log", "/opt/graphite/conf", "/var/log/supervisor"]
 
 # -------- #
 #   Run!   #
 # -------- #
 
-CMD     ["/bin/sh", "/usr/bin/supervisord-start.sh"]
+CMD     ["/usr/bin/supervisord.sh"]
