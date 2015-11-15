@@ -101,4 +101,4 @@ EXPOSE  8126
 #   Run!   #
 # -------- #
 
-CMD     ["/usr/bin/supervisord.sh"]
+CMD     ["/usr/bin/supervisord"]
