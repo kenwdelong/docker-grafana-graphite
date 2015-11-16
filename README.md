@@ -29,16 +29,14 @@ in the [Docker documentation](http://docs.docker.io/use/port_redirection/#port-r
 External volumes can be used to customize graphite configuration and store data out of the container.
 
 - Graphite configuration: `/opt/graphite/conf`
-- Graphite data: `/opt/graphite/storage`
+- Graphite data: `/opt/graphite/storage/whisper`
 - Supervisord log: `/var/log/supervisor`
-
-If you do mount external volumes, be sure to create the /opt/graphite/storage/log/webapp directory as well, or graphite will not start properly.
 
 ### Building the image yourself ###
 
 The Dockerfile and supporting configuration files are available in our [Github repository](https://github.com/kenwdelong/docker-grafana-graphite).
 This comes specially handy if you want to change any of the StatsD, Graphite or Grafana settings, or simply if you want
-to know how tha image was built.
+to know how the image was built.
 
 
 ### Using the Dashboard ###
@@ -47,8 +45,7 @@ Once your container is running all you need to do is:
 - open your browser pointing to the host/port you just published
 - login with the default username (admin) and password (admin)
 - configure a new datasource to point at the Graphite metric data (URL - http://localhost:8000) and replace the default Grafana test datasource for your graphs
-- open your browser pointing to the host/port you just published and
-play with the dashboard at your wish...
+- open your browser pointing to the host/port you just published and play with the dashboard at your wish...
 
 We hope that you have a lot of fun with this image and that it serves it's
 purpose of making your life easier. This should give you an idea of how the dashboard looks like when receiving data
