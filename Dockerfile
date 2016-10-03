@@ -11,7 +11,8 @@ ENV GRAPHITE_VERSION=0.9.15 \
     GRAFANA_VERSION=3.1.1
 
 # Install all prerequisites
-RUN     apt-get -y install software-properties-common \
+RUN     apt-get update \     
+        && apt-get -y install software-properties-common \
         && add-apt-repository -y ppa:chris-lea/node.js \
         && apt-get -y update \
         && apt-get -y install python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
