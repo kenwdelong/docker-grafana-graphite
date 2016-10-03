@@ -4,12 +4,6 @@ MAINTAINER  kenwdelong
 #   Installation   #
 # ---------------- #
 
-ENV GRAPHITE_VERSION=0.9.15 \
-    STATS_VERSION=v0.8.0 \
-    DJANGO_VERSION=1.5 \
-    TWISTED_VERSION=11.1.0 \
-    GRAFANA_VERSION=3.1.1-1470047149
-
 # Install all prerequisites
 RUN     apt-get update \     
         && apt-get -y install software-properties-common \
@@ -20,6 +14,12 @@ RUN     apt-get update \
         && apt-get autoclean \
         && apt-get clean \
         && apt-get autoremove
+
+ENV GRAPHITE_VERSION=0.9.15 \
+    STATS_VERSION=v0.8.0 \
+    DJANGO_VERSION=1.5 \
+    TWISTED_VERSION=11.1.0 \
+    GRAFANA_VERSION=3.1.1-1470047149
 
 RUN     pip install Twisted==$TWISTED_VERSION \
         && pip install Django==$DJANGO_VERSION \
