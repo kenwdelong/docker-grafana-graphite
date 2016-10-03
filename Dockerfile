@@ -8,7 +8,7 @@ ENV GRAPHITE_VERSION=0.9.15 \
     STATS_VERSION=v0.8.0 \
     DJANGO_VERSION=1.10.2 \
     TWISTED_VERSION=16.4.1 \
-    GRAFANA_VERSION=3.1.1
+    GRAFANA_VERSION=3.1.1-1470047149
 
 # Install all prerequisites
 RUN     apt-get update \     
