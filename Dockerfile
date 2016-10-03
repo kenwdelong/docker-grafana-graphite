@@ -4,6 +4,12 @@ MAINTAINER  kenwdelong
 #   Installation   #
 # ---------------- #
 
+ENV GRAPHITE_VERSION=0.9.15 \
+    STATS_VERSION=v0.8.0 \
+    DJANGO_VERSION=1.10.2 \
+    TWISTED_VERSION=16.4.1 \
+    GRAFANA_VERSION=3.1.1
+
 # Install all prerequisites
 RUN     apt-get -y install software-properties-common \
         && add-apt-repository -y ppa:chris-lea/node.js \
@@ -14,8 +20,8 @@ RUN     apt-get -y install software-properties-common \
         && apt-get clean \
         && apt-get autoremove
 
-RUN     pip install Twisted==11.1.0 \
-        && pip install Django==1.5 \
+RUN     pip install Twisted==$TWISTED_VERSION \
+        && pip install Django==$DJANGO_VERSION \
         && pip install pytz
         
 RUN     npm install ini chokidar        
@@ -25,22 +31,22 @@ RUN     npm install ini chokidar
 RUN     mkdir -p /src \
         && git clone https://github.com/graphite-project/whisper.git /src/whisper \
         && cd /src/whisper \
-        && git checkout 0.9.x \
+        && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
         && git clone https://github.com/graphite-project/carbon.git /src/carbon \
         && cd /src/carbon \
-        && git checkout 0.9.x \
+        && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
         && git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web \
         && cd /src/graphite-web \
-        && git checkout 0.9.x \
+        && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
         && git clone https://github.com/etsy/statsd.git /src/statsd \
         && cd /src/statsd \
-        && git checkout v0.7.2 \
+        && git checkout $STATSD_VERSION \
         && mkdir /src/grafana \
         && mkdir /opt/grafana \
-        && wget https://grafanarel.s3.amazonaws.com/builds/grafana-2.1.3.linux-x64.tar.gz -O /src/grafana.tar.gz \
+        && wget https://grafanarel.s3.amazonaws.com/builds/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
         && tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 \
         && rm /src/grafana.tar.gz
 
