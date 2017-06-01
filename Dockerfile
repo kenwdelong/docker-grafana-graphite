@@ -15,11 +15,11 @@ RUN     apt-get update \
         && apt-get clean \
         && apt-get autoremove
 
-ENV GRAPHITE_VERSION=0.9.15 \
+ENV GRAPHITE_VERSION=1.0.1 \
     STATS_VERSION=v0.8.0 \
-    DJANGO_VERSION=1.5 \
-    TWISTED_VERSION=11.1.0 \
-    GRAFANA_VERSION=4.1.2-1486989747
+    DJANGO_VERSION=1.11.2 \
+    TWISTED_VERSION=17.1.0 \
+    GRAFANA_VERSION=4.3.2
 
 RUN     pip install Twisted==$TWISTED_VERSION \
         && pip install Django==$DJANGO_VERSION \
