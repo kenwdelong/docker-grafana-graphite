@@ -10,7 +10,7 @@ RUN     apt-get update \
         && add-apt-repository -y ppa:chris-lea/node.js \
         && apt-get -y update \
         && apt-get -y install python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
-            python-pip gunicorn supervisor nginx-light nodejs git wget curl openjdk-7-jre build-essential python-dev \
+            python-pip gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev \
         && apt-get autoclean \
         && apt-get clean \
         && apt-get autoremove
@@ -18,14 +18,15 @@ RUN     apt-get update \
 ENV GRAPHITE_VERSION=1.0.1 \
     STATS_VERSION=v0.8.0 \
     DJANGO_VERSION=1.11.2 \
-    TWISTED_VERSION=17.1.0 \
+    TWISTED_VERSION=13.2.0 \
     GRAFANA_VERSION=4.3.2
 
 RUN     pip install Twisted==$TWISTED_VERSION \
-        && pip install Django==$DJANGO_VERSION \
         && pip install pytz
         
-RUN     npm install ini chokidar        
+RUN	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - \
+    && apt-get install -y nodejs \
+	&& npm install -g wizzy
 
 # Checkout the stable branches of Graphite, Carbon and Whisper and install from there
 # Install StatsD
@@ -34,17 +35,23 @@ RUN     mkdir -p /src \
         && cd /src/whisper \
         && git checkout $GRAPHITE_VERSION \
         && python setup.py install
+        
 RUN     git clone https://github.com/graphite-project/carbon.git /src/carbon \
         && cd /src/carbon \
         && git checkout $GRAPHITE_VERSION \
         && python setup.py install
+        
 RUN     git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web \
         && cd /src/graphite-web \
         && git checkout $GRAPHITE_VERSION \
-        && python setup.py install
+        && python setup.py install \
+        && pip install -r requirements.txt \
+        && python check-dependencies.py
+        
 RUN     git clone https://github.com/etsy/statsd.git /src/statsd \
         && cd /src/statsd \
         && git checkout $STATSD_VERSION
+        
 RUN     mkdir /src/grafana \
         && mkdir /opt/grafana \
         && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
@@ -67,20 +74,29 @@ ADD     ./graphite/storage-aggregation.conf /opt/graphite/conf/storage-aggregati
 
 RUN     mkdir -p /opt/graphite/storage/whisper \
         && touch /opt/graphite/storage/graphite.db /opt/graphite/storage/index \
-        && chown -R root:root /opt/graphite/storage \
+        && chown -R www-data /opt/graphite/storage \
         && chmod 0775 /opt/graphite/storage /opt/graphite/storage/whisper \
         && chmod 0664 /opt/graphite/storage/graphite.db \
-        && cd /opt/graphite/webapp/graphite 
-#        && python manage.py syncdb --noinput
+        && cp /src/graphite-web/webapp/manage.py /opt/graphite/webapp 
+        && cd /opt/graphite/webapp/ \
+        && python manage.py migrate --run-syncdb --noinput
 
 # Configure Grafana
 ADD     ./grafana/custom.ini /opt/grafana/conf/custom.ini
 
+RUN	cd /src \
+    && wizzy init \
+	&& extract() { cat /opt/grafana/conf/custom.ini | grep $1 | awk '{print $NF}'; } \
+	&& wizzy set grafana url $(extract ";protocol")://$(extract ";domain"):$(extract ";http_port")	\		
+	&& wizzy set grafana username $(extract ";admin_user")	\
+	&& wizzy set grafana password $(extract ";admin_password")
+	
 # Add the default dashboards
-RUN     mkdir /src/dashboards \
-        && mkdir /src/dashboard-loader
+RUN 	mkdir /src/datasources \
+        && mkdir /src/dashboards
+ADD	    ./grafana/datasources/* /src/datasources
 ADD     ./grafana/dashboards/* /src/dashboards/
-ADD     ./grafana/dashboard-loader/dashboard-loader.js /src/dashboard-loader/
+ADD     ./grafana/export-datasources-and-dashboards.sh /src/
 
 # Configure nginx and supervisord
 ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
