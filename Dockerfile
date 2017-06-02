@@ -77,7 +77,7 @@ RUN     mkdir -p /opt/graphite/storage/whisper \
         && chown -R www-data /opt/graphite/storage \
         && chmod 0775 /opt/graphite/storage /opt/graphite/storage/whisper \
         && chmod 0664 /opt/graphite/storage/graphite.db \
-        && cp /src/graphite-web/webapp/manage.py /opt/graphite/webapp 
+        && cp /src/graphite-web/webapp/manage.py /opt/graphite/webapp \
         && cd /opt/graphite/webapp/ \
         && python manage.py migrate --run-syncdb --noinput
 
