@@ -33,18 +33,18 @@ RUN     mkdir -p /src \
         && git clone https://github.com/graphite-project/whisper.git /src/whisper \
         && cd /src/whisper \
         && git checkout $GRAPHITE_VERSION \
-        && python setup.py install \
+        && python setup.py install
 RUN     git clone https://github.com/graphite-project/carbon.git /src/carbon \
         && cd /src/carbon \
         && git checkout $GRAPHITE_VERSION \
-        && python setup.py install \
+        && python setup.py install
 RUN     git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web \
         && cd /src/graphite-web \
         && git checkout $GRAPHITE_VERSION \
-        && python setup.py install \
+        && python setup.py install
 RUN     git clone https://github.com/etsy/statsd.git /src/statsd \
         && cd /src/statsd \
-        && git checkout $STATSD_VERSION \
+        && git checkout $STATSD_VERSION
 RUN     mkdir /src/grafana \
         && mkdir /opt/grafana \
         && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
