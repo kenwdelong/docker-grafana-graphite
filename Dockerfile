@@ -34,18 +34,18 @@ RUN     mkdir -p /src \
         && cd /src/whisper \
         && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
-        && git clone https://github.com/graphite-project/carbon.git /src/carbon \
+RUN     git clone https://github.com/graphite-project/carbon.git /src/carbon \
         && cd /src/carbon \
         && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
-        && git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web \
+RUN     git clone https://github.com/graphite-project/graphite-web.git /src/graphite-web \
         && cd /src/graphite-web \
         && git checkout $GRAPHITE_VERSION \
         && python setup.py install \
-        && git clone https://github.com/etsy/statsd.git /src/statsd \
+RUN     git clone https://github.com/etsy/statsd.git /src/statsd \
         && cd /src/statsd \
         && git checkout $STATSD_VERSION \
-        && mkdir /src/grafana \
+RUN     mkdir /src/grafana \
         && mkdir /opt/grafana \
         && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
         && tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 \
@@ -70,8 +70,8 @@ RUN     mkdir -p /opt/graphite/storage/whisper \
         && chown -R root:root /opt/graphite/storage \
         && chmod 0775 /opt/graphite/storage /opt/graphite/storage/whisper \
         && chmod 0664 /opt/graphite/storage/graphite.db \
-        && cd /opt/graphite/webapp/graphite \
-        && python manage.py syncdb --noinput
+        && cd /opt/graphite/webapp/graphite 
+#        && python manage.py syncdb --noinput
 
 # Configure Grafana
 ADD     ./grafana/custom.ini /opt/grafana/conf/custom.ini
