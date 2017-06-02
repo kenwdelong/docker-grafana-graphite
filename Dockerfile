@@ -47,7 +47,7 @@ RUN     mkdir -p /src \
         && git checkout $STATSD_VERSION \
         && mkdir /src/grafana \
         && mkdir /opt/grafana \
-        && wget https://grafanarel.s3.amazonaws.com/builds/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
+        && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
         && tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 \
         && rm /src/grafana.tar.gz
 
