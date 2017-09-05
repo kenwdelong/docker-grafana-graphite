@@ -25,6 +25,9 @@ If you already have services running on your host that are using any of these po
 ports to whatever you want by changing left side number in the `-p` parameters. Find more details about mapping ports
 in the [Docker documentation](http://docs.docker.io/use/port_redirection/#port-redirection).
 
+#### Testing ####
+Run the test script in the test-grafana directory.  Then go to port 80 on the container, log in as admin/admin, and create a chart that looks at `stats/counters/example/statsd/counter/changed/count`.  You should see the graph working there.
+
 #### External Volumes ####
 External volumes can be used to customize graphite configuration and store data out of the container.
 
