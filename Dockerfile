@@ -18,7 +18,7 @@ RUN     apt-get update \
 ENV GRAPHITE_VERSION=1.0.2 \
     STATS_VERSION=v0.8.0 \
     TWISTED_VERSION=13.2.0 \
-    GRAFANA_VERSION=4.4.3
+    GRAFANA_VERSION=4.6.2
 
 RUN     pip install Twisted==$TWISTED_VERSION \
         && pip install pytz
