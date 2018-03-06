@@ -15,10 +15,10 @@ RUN     apt-get update \
         && apt-get clean \
         && apt-get autoremove
 
-ENV GRAPHITE_VERSION=1.0.2 \
+ENV GRAPHITE_VERSION=1.1.2 \
     STATS_VERSION=v0.8.0 \
     TWISTED_VERSION=13.2.0 \
-    GRAFANA_VERSION=4.6.2
+    GRAFANA_VERSION=5.0.0
 
 RUN     pip install Twisted==$TWISTED_VERSION \
         && pip install pytz
