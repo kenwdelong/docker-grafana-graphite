@@ -8,9 +8,7 @@
   graphiteHost: "127.0.0.1",
   flushInterval: 10000,
   
-  deleteTimers: true,
-  deleteSets: true,
-  deleteCounters: true,
+  deleteIdleStats: true,
 
   backends: ['./backends/graphite'],
   graphite: {
@@ -18,3 +16,4 @@
   }
 }
 // https://github.com/etsy/statsd/blob/master/exampleConfig.js
+// https://grafana.com/blog/2016/03/03/25-graphite-grafana-and-statsd-gotchas/#graphite.quantization
