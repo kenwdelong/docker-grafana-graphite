@@ -6,10 +6,15 @@
 
   graphitePort: 2003,
   graphiteHost: "127.0.0.1",
-  flushInterval: 15000,
+  flushInterval: 10000,
+  
+  deleteTimers: true,
+  deleteSets: true,
+  deleteCounters: true,
 
   backends: ['./backends/graphite'],
   graphite: {
     legacyNamespace: false
   }
 }
+// https://github.com/etsy/statsd/blob/master/exampleConfig.js
