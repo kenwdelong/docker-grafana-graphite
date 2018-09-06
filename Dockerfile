@@ -9,7 +9,7 @@ RUN     apt-get update \
         && apt-get -y upgrade \
         && apt-get -y install python-simplejson python-memcache python-ldap python-support \
             python-pip gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev python-flup \
-            sqllite3 libcairo2 libcairo2-dev python-cairo\
+            sqlite3 libcairo2 libcairo2-dev python-cairo\
         && apt-get autoclean \
         && apt-get clean \
         && apt-get autoremove
