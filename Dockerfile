@@ -15,9 +15,9 @@ RUN     apt-get update \
         && apt-get clean \
         && apt-get autoremove
 
-ENV GRAPHITE_VERSION=1.1.4 \
+ENV GRAPHITE_VERSION=1.1.3 \
     STATS_VERSION=v0.8.0 \
-    TWISTED_VERSION=18.7.0 \
+    TWISTED_VERSION=18.4.0 \
     GRAFANA_VERSION=5.2.3
 
 RUN     pip install Twisted==$TWISTED_VERSION \
@@ -53,7 +53,7 @@ RUN     git clone https://github.com/etsy/statsd.git /src/statsd \
         
 RUN     mkdir /src/grafana \
         && mkdir /opt/grafana \
-        && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-x64.tar.gz -O /src/grafana.tar.gz \
+        && wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz -O /src/grafana.tar.gz \
         && tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1 \
         && rm /src/grafana.tar.gz
 
