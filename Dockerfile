@@ -6,11 +6,10 @@ MAINTAINER  kenwdelong
 
 # Install all prerequisites
 RUN     apt-get update \     
-        && apt-get -y install software-properties-common \
-        && add-apt-repository -y ppa:chris-lea/node.js \
-        && apt-get -y update \
-        && apt-get -y install python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
-            python-pip gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev \
+        && apt-get -y upgrade \
+        && apt-get -y install python-simplejson python-memcache python-ldap python-support \
+            python-pip gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev python-flup \
+            sqllite3 libcairo2 libcairo2-dev python-cairo\
         && apt-get autoclean \
         && apt-get clean \
         && apt-get autoremove
