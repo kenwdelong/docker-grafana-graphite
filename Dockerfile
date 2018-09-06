@@ -19,7 +19,8 @@ ENV GRAPHITE_VERSION=1.1.4 \
     TWISTED_VERSION=18.7.0 \
     GRAFANA_VERSION=5.2.3
 
-RUN     pip install Twisted==$TWISTED_VERSION \
+RUN    python -m pip install --upgrade pip setuptools \
+		&& pip install Twisted==$TWISTED_VERSION \
         && pip install pytz
         
 RUN	curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - \
