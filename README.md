@@ -1,6 +1,9 @@
 StatsD + Graphite + Grafana
 ---------------------------
 
+# NO LONGER MAINTAINED
+As of September 7, 2018, this image is replaced by [https://github.com/kenwdelong/docker-graphite-statsd](https://github.com/kenwdelong/docker-graphite-statsd).
+
 This image contains a sensible default configuration of StatsD, Graphite and Grafana. There are two ways
 for using this image:
 
